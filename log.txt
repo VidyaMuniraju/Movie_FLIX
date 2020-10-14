@@ -40,3 +40,15 @@ Timestamp: Tue Oct 13 2020 22:50:05 GMT-0500 (Central Daylight Time)
 URL: /favicon.ico
 Timestamp: Tue Oct 13 2020 22:50:05 GMT-0500 (Central Daylight Time)
 
+URL: /
+Timestamp: Wed Oct 14 2020 11:49:19 GMT-0500 (Central Daylight Time)
+
+URL: /favicon.ico
+Timestamp: Wed Oct 14 2020 11:49:21 GMT-0500 (Central Daylight Time)
+
+URL: /documentation
+Timestamp: Wed Oct 14 2020 11:49:30 GMT-0500 (Central Daylight Time)
+
+URL: /favicon.ico
+Timestamp: Wed Oct 14 2020 11:49:30 GMT-0500 (Central Daylight Time)
+

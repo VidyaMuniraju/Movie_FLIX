@@ -2,13 +2,7 @@ const express = require('express'),
     morgan = require('morgan');
 const app = express();
 
-let logToConsole = (req, res, next) => {
-    console.log(req.url);
-    next();
-}
-
-app.use(morgan("common"));
-app.use(logToConsole);
+app.use(morgan('common'));
 app.use(express.static("public"));
 
 

@@ -2,14 +2,127 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Movie FLIX</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <!-- <link rel="stylesheet" href="css/stylesheet.css" /> -->
   </head>
   <body>
+    <header>
+      <h1>
+        My Flix Project
+      </h1>
+          
+      <p>
+        This is an web application that will provide users with access to information about different movies, directors, and genres. Users
+        will be able to sign up, update their personal information, and create a list of their favorite movies.
+      </p>
+    </header>
 
-    <p>The web application will
-        provide users with access to information about different movies, directors, and genres. Users
-        will be able to sign up, update their personal information, and create a list of their favorite
-        movies.
-    </p>
+    <main>
+      <table class="table table-bordered">
+
+        <thead class="thead-light">
+          <tr>
+            <th>Description of the request</th>
+            <th>URL Endpoint</th>
+            <th>HTTP Method Type</th>
+            <th>Parameters in URL</th>
+            <th>Format of data in the body of request</th>
+            <th>Format of the response data</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Return a list of all movies to the user</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>None</td>
+            <td>A JSON object holding data about all movies</td>
+          </tr>
+                  
+          <tr>
+            <td>Return data about a single movie to the user</td>
+            <td>/movies/:title</td>
+            <td>GET</td>
+            <td>Request parameter</td>
+            <td>None</td>
+            <td>A JSON object that holds data - genre, description, director's name, and an image URL of the movie requested</td>
+          </tr>
+                  
+          <tr>
+            <td>Return data about a genre</td>
+            <td>/movies/genres/:genreName</td>
+            <td>GET</td>
+            <td>Request parameter</td>
+            <td>None</td>
+            <td>A JSON object holding data about the requested genre - name and description</td>
+          </tr>
+                  
+          <tr>
+            <td>Return data about a director</td>
+            <td>/movies/directors/:directorName</td>
+            <td>GET</td>
+            <td>Request parameter</td>
+            <td>None</td>
+            <td>A JSON object holding data about the director - name, bio, year of birth, year of death(if not empty)</td>
+          </tr>
+                  
+          <tr>
+            <td>Allow new users to register</td>
+            <td>/users</td>
+            <td>POST</td>
+            <td>None</td>
+            <td>A JSON object hodling data about the new user - username, password, emailID, and date of birth</td>
+            <td>A JSON object holding data about the new user - an userID, username, list of favorite movies(must be empty)</td>
+          </tr>
+                  
+          <tr>
+            <td>Allow users to update their user info(username)</td>
+            <td>/users/:userName</td>
+            <td>PUT</td>
+            <td>Request parameter</td>
+            <td>A JSON object holding the updated data - username, emailID</td>
+            <td>A JSON object holding data - userID, username, password, emailID, and date of birth which reflects the changes made</td>
+          </tr>
+                  
+          <tr>
+            <td>Allow users to add a movie to their list of favorites</td>
+            <td>/users/:userName/movies/:title</td>
+            <td>POST</td>
+            <td>Request parameter</td>
+            <td>A JSON object holding data about the movie to add - name, description, genre, director's name, and an image URL
+            </td>
+            <td>A text message indicating that the movie was added to the favorites list of the user</td>
+          </tr>
+                  
+          <tr>
+            <td>Allow users to remove a movie from their list of favorites</td>
+            <td>/users/:userName/movies/:title</td>
+            <td>DELETE</td>
+            <td>Request parameter</td>
+            <td>None</td>
+            <td>A text message indicating that the movie was deleted from their list of favorites</td>
+          </tr>
+                  
+          <tr>
+            <td>Allow existing users to deregister</td>
+            <td>/users/:userName</td>
+            <td>DELETE</td>
+            <td>Request parameter</td>
+            <td>None</td>
+            <td>A text message indicating that the user has been deregistered</td>
+          </tr>
+
+        </tbody>
+
+
+      </table>
+    </main>
+
+
   </body>
 </html>

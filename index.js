@@ -85,7 +85,7 @@ app.get('/movies/:title', (req, res, next) => {
 });
 
 // get data about a genre
-app.get('/movies/genres/:genreName', (req, res, next) => {
+app.get('/movies/genre/:Name', (req, res, next) => {
   // res.json(topMovies.find((genre) => {
   //   return topMovies.genre === req.params.genreName
   // }));
@@ -95,7 +95,7 @@ app.get('/movies/genres/:genreName', (req, res, next) => {
 });
 
 // get data about a director
-app.get('/movies/directors/:directorName', (req, res, next) => {
+app.get('/movies/director/:Name', (req, res, next) => {
   // res.json(topMovies.find((director) => {
   //   return topMovies.director === req.params.directorName
   // }));
@@ -110,24 +110,24 @@ app.post('/users', (req, res, next) => {
 });
 
 // allow users to update their user info (username)
-app.put('/users/:userName', (req, res, next) => {
+app.put('/users/:Username', (req, res, next) => {
   res.status(201).send('Your username has been successfully changed to -' + req.params.userName);
 });
 
 // allow users to add a movie to their list of favorites
-app.post('/users/:userName/movies/:title', (req, res, next) => {
+app.post('/users/:Username/favoritemovies/:title', (req, res, next) => {
   res.status(201).send(req.params.title + ' was added to the list of favorites');
 });
 
 // allow users to remove a movie from their list of favorites
-app.delete('/users/:userName/movies/:title', (req, res, next) => {
+app.delete('/users/:Username/favoritemovies/:title', (req, res, next) => {
   res
     .status(201)
     .send(req.params.title + ' was removed from the list of favorites');
 });
 
 // allow existing users to deregister
-app.delete('/users/:userName', (req, res, next) => {
+app.delete('/users/:Username', (req, res, next) => {
   res.status(201).send('Your account has been successfully deleted');
 });
 

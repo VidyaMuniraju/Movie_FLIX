@@ -33,13 +33,13 @@ const passport = require("passport");
 require("./passport");
 
 // list of allowed domains
-let allowedOrigins = *;
+let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080'];
 
 // allowing certain origins to be given access
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
+      // if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         let message =
           "The CORS policy for this application doesn't allow acces from origin " +

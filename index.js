@@ -36,31 +36,27 @@ require("./passport");
 let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080'];
 
 // allowing certain origins to be given access
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true);
-//       if (allowedOrigins.indexOf(origin) === -1) {
-//         let message =
-//           "The CORS policy for this application doesn't allow acces from origin " +
-//           origin;
-//         return callback(new Error(message), false);
-//       }
-//       return callback(null, true);
-//     }
-//   })
-// );
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      let message = "The CORS policy for this application doesn't allow acces from origin " + origin;
+      return callback(new Error(message), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080']
-let corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (allowedOrigins.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
-  } else {
-    corsOptions = { origin: false } // disable CORS for this request
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-}
+// let corsOptionsDelegate = function (req, callback) {
+//   let corsOptions;
+//   if (allowedOrigins.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+//   } else {
+//     corsOptions = { origin: false } // disable CORS for this request
+//   }
+//   callback(null, corsOptions) // callback expects two parameters: error and options
+// }
 
 // the root URL
 app.get("/", (req, res) => {
@@ -68,51 +64,51 @@ app.get("/", (req, res) => {
 });
 
 // get the list of all movies
-app.get("/movies", passport.authenticate('jwt', { session: false }), cors(corsOptionsDelegate), (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 // get data about a single movie
 app.get("/movies/:Title", passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ Title: req.params.Title })
-    .then((movie) => {
-      res.json(movie);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+  .then((movie) => {
+    res.json(movie);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 // get data about a genre
 app.get("/movies/Genre/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ "Genre.Name": req.params.Name })
-    .then((movie) => {
-      res.json(movie.Genre);
-    })
-    .catch((err) => {
-      console.erroe(err);
-      res.status(500).send("Error: " + err);
-    });
+  .then((movie) => {
+    res.json(movie.Genre);
+  })
+  .catch((err) => {
+    console.erroe(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 // get data about a director
 app.get("/movies/Director/:Name", passport.authenticate('jwt', { session: false }), (req, res) => {
   Movies.findOne({ "Director.Name": req.params.Name })
-    .then((movie) => {
-      res.json(movie.Director);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+  .then((movie) => {
+    res.json(movie.Director);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
 });
 
 // allow new users to register

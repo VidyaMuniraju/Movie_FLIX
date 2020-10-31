@@ -33,7 +33,7 @@ const passport = require("passport");
 require("./passport");
 
 // list of allowed domains
-let allowedOrigins = ['http://localhost:1234', 'http://localhost:8080'];
+let allowedOrigins = ['https://localhost:1234', 'http://localhost:8080'];
 
 // allowing certain origins to be given access
 app.use(cors({
@@ -115,7 +115,7 @@ app.get("/movies/Director/:Name", passport.authenticate('jwt', { session: false 
 // using a chain of methods like .not().isEmpty() for validating password
 // using .isLength({min: 5}) for imposing that minimum of 5 characters are only allowed for username
 app.post(
-  "/users",
+  '/users',
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(

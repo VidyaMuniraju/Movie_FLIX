@@ -47,7 +47,7 @@ app.use(
         return callback(new Error(message), false);
       }
       return callback(null, true);
-    },
+    }
   })
 );
 

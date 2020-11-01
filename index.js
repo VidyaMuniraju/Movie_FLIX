@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 app.use(cors(corsOptions));
 let auth = require("./auth")(app);
-let auth = require("./auth")(app);
+// let auth = require("./auth")(app);
 const passport = require("passport");
 require("./passport");
 // list of allowed domains

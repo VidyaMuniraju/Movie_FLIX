@@ -12,7 +12,7 @@ mongoose.connect(
   "mongodb+srv://movieFlixAdmin:Jdat10mvsfx@clusterflix.esaku.mongodb.net/myFlixDB?retryWrites=true&w=majority",
   {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   }
 );
 // mongoose.connect( process.env.CONNECTION_URI, {
@@ -34,13 +34,13 @@ require("./passport");
 // list of allowed domains
 let allowedOrigins = ["http://localhost:1234", "http://localhost:8000"];
 var corsOptions = {
-  origin: function (origin, callback) {
+  origin: function(origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
-  },
+  }
 };
 
 // the root URL
@@ -50,10 +50,10 @@ app.get("/", (req, res) => {
 // get the list of all movies
 app.get("/movies", (req, res, next) => {
   Movies.find()
-    .then((movies) => {
+    .then(movies => {
       res.status(201).json(movies);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
@@ -64,10 +64,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-      .then((movie) => {
+      .then(movie => {
         res.json(movie);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).send("Error: " + err);
       });
@@ -79,10 +79,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ "Genre.Name": req.params.Name })
-      .then((movie) => {
+      .then(movie => {
         res.json(movie.Genre);
       })
-      .catch((err) => {
+      .catch(err => {
         console.erroe(err);
         res.status(500).send("Error: " + err);
       });
@@ -94,10 +94,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ "Director.Name": req.params.Name })
-      .then((movie) => {
+      .then(movie => {
         res.json(movie.Director);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).send("Error: " + err);
       });
@@ -114,8 +114,10 @@ app.post(
       "Username",
       "Username contains non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
-    check("Password", "Password is required").not().isEmpty(),
-    check("EmailId", "Email does not appear to be valid").isEmail(),
+    check("Password", "Password is required")
+      .not()
+      .isEmpty(),
+    check("EmailId", "Email does not appear to be valid").isEmail()
   ],
   (req, res) => {
     // check the validation object for errors
@@ -125,7 +127,7 @@ app.post(
     }
     let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
-      .then((user) => {
+      .then(user => {
         if (user) {
           return res.status(400).send(req.body.Username + "already exists");
         } else {
@@ -133,18 +135,18 @@ app.post(
             Username: req.body.Username,
             Password: hashedPassword,
             EmailId: req.body.EmailId,
-            BirthDay: req.body.BirthDay,
+            BirthDay: req.body.BirthDay
           })
-            .then((user) => {
+            .then(user => {
               res.status(201).json(user);
             })
-            .catch((error) => {
+            .catch(error => {
               console.error(error);
               res.status(500).send("Error:" + error);
             });
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
         res.status(500).send("Error: " + error);
       });
@@ -156,10 +158,10 @@ app.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
-      .then((user) => {
+      .then(user => {
         res.json(user);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).send("Error: " + err);
       });
@@ -186,8 +188,10 @@ app.put(
       "Username",
       "Username conatins non alphanumeric characters - not allowed."
     ).isAlphanumeric(),
-    check("Password", "Password is required").not().isEmpty(),
-    check("EmailId", "Email does not appear to be valid").isEmail(),
+    check("Password", "Password is required")
+      .not()
+      .isEmpty(),
+    check("EmailId", "Email does not appear to be valid").isEmail()
   ],
   (req, res) => {
     let errors = validationResult(req);
@@ -202,8 +206,8 @@ app.put(
           Username: req.body.Username,
           Password: hashedPassword,
           EmailId: req.body.EmailId,
-          BirthDay: req.body.BirthDay,
-        },
+          BirthDay: req.body.BirthDay
+        }
       },
       { new: true },
       (err, updatedUser) => {
@@ -225,7 +229,7 @@ app.post(
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $push: { FavoriteMovies: req.params.MovieID },
+        $push: { "FavoriteMovies": req.params.MovieID }
       },
       { new: true },
       (err, updatedUser) => {
@@ -247,7 +251,7 @@ app.delete(
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $pull: { FavoriteMovies: req.params.MovieID },
+        $pull: { "FavoriteMovies": req.params.MovieID }
       },
       { new: true },
       (err, updatedUser) => {
@@ -261,20 +265,21 @@ app.delete(
     );
   }
 );
+
 // allow existing users to deregister
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
-      .then((user) => {
+      .then(user => {
         if (!user) {
           res.status(400).send(req.params.Username + " was not found");
         } else {
           res.status(200).send(req.params.Username + " was deleted.");
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
         res.status(500).send("Error: " + err);
       });

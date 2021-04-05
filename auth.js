@@ -1,3 +1,6 @@
+/**
+* The key used in passport.js
+*/
 const jwtSecret = 'your_jwt_secret';
 
 const jwt = require('jsonwebtoken'),
@@ -5,6 +8,9 @@ const jwt = require('jsonwebtoken'),
 
 require('./passport');
 
+/**
+* Generating token and setting the expiration day for 7 days
+*/
 let generateJWTToken = (user) => {
     return jwt.sign(user, jwtSecret, {
         subject: user.Username,
@@ -12,7 +18,9 @@ let generateJWTToken = (user) => {
         algorithm: 'HS256'
     });
 }
-
+/**
+* API for the login functionality
+*/
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {

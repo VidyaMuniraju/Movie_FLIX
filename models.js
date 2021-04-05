@@ -1,6 +1,12 @@
+/**
+* Required to use Mongoose
+*/
 const mongoose = require('mongoose'),
       bcrypt = require('bcrypt');
 
+/**
+* Setting the movie schema
+*/
 let movieSchema = mongoose.Schema({
     Title: { type: String, required: true},
     Description: {type: String, required: true},
@@ -17,6 +23,9 @@ let movieSchema = mongoose.Schema({
     Featured: Boolean
 });
 
+/**
+* Setting the user schema
+*/
 let userSchema = mongoose.Schema({
     Username: {type: String, required: true},
     Password: {type: String, required: true},
